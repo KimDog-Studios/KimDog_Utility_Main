@@ -2,7 +2,6 @@
 $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $cabFiles = "$scriptDir\lib"
 $mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/main.ps1"
-$jsonFile = 
 
 function Documents {
     $cabFile = "$cabFiles\Documents_001.cab"
@@ -12,7 +11,8 @@ function Documents {
     if (Test-Path $cabFile) {
         Expand -F:* $cabFile $extractPath
         Write-Host "Documents extracted successfully."
-    } else {
+    }
+    else {
         Write-Host "Documents CAB file does not exist."
         return
     }
@@ -26,7 +26,8 @@ function Documents {
     }
     if ($LASTEXITCODE -ne 0) {
         Write-Host "Failed to copy files!"
-    } else {
+    }
+    else {
         Write-Host "Finished copying all the Files from Extracted Documents folder..."
     }
 
@@ -39,19 +40,19 @@ function Documents {
 }
 
 function Software {
-    # Define the path to the JSON file
-    $jsonFilePath = "apps.json"
+    # Define the URL to the JSON file
+    $jsonFileUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/apps.json"
 
-    # Read the JSON file
-    $jsonContent = Get-Content -Path $jsonFilePath -Raw | ConvertFrom-Json
+    # Fetch the JSON file content
+    $jsonContent = Invoke-RestMethod -Uri $jsonFileUrl
 
-    #   Extract the list of apps
+    # Extract the list of apps
     $appList = $jsonContent.apps
 
     # Loop through each app ID and install it using winget
     foreach ($app in $appList) {
-    Write-Output "Installing $app..."
-    winget install --id $app --silent --accept-package-agreements --accept-source-agreements
+        Write-Output "Installing $app..."
+        winget install --id $app --silent --accept-package-agreements --accept-source-agreements
     }
 }   
 
