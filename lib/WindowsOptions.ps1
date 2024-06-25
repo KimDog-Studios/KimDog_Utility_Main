@@ -39,7 +39,7 @@ function Documents {
 
 function Software {
     # Define the path to the JSON file
-    $jsonFilePath = ".\apps.json"
+    $jsonFilePath = ".\.\config.json"
 
     # Read the JSON file
     $jsonContent = Get-Content -Path $jsonFilePath -Raw | ConvertFrom-Json
