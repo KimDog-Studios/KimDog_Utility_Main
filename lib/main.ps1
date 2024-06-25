@@ -37,37 +37,7 @@ function Documents {
 }
 
 function Software {
-    $softwareDir = "$cabFiles\Softwares_001.cab"
-    $extractPath = "$scriptDir\Temp"
-
-    if (-not (Test-Path $extractPath)) {
-        New-Item -ItemType Directory -Path $extractPath | Out-Null
-    }
-
-    # Check if the CAB file exists and extract it
-    if (Test-Path $softwareDir) {
-        Expand -F:* $softwareDir $extractPath
-        Write-Host "Software extracted successfully."
-    } else {
-        Write-Host "Software CAB file does not exist."
-        return
-    }
-
-    # Call a batch script
-    $batchScript = Join-Path $scriptDir "install.bat"
-    if (Test-Path $batchScript) {
-        Write-Host "Calling batch script: $batchScript"
-        Start-Process -FilePath $batchScript -Wait
-        Write-Host "Batch script executed."
-        
-        # Remove the extracted folder after installation
-        Remove-Item -Path $extractPath -Recurse -Force
-        Write-Host "Cleanup of extracted software files complete."
-    } else {
-        Write-Host "Batch script not found in the extracted folder."
-    }
-    Start-Sleep -Seconds 5
-    Clear-Host
+    
 }
 
 # Menu function
