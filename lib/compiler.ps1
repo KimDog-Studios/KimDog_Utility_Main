@@ -71,7 +71,7 @@ function Check_AllVcredists {
 }
 
 # Path to your batch script
-$batchScriptPath = ".\lib\All_Visual_C\install_all.bat"
+$batchScriptPath = ".\install_all.bat"
 
 # Check for missing vcredists
 $missingVcredists = Check_AllVcredists -versions $vcredist_versions
