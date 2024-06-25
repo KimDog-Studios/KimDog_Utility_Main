@@ -1,4 +1,5 @@
 $gameOptionsUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/GameOptions.ps1"
+$windowsOptionsUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/WindowsOptions.ps1"
 
 # Menu function
 function Show-Main-Menu {
@@ -11,7 +12,7 @@ function Show-Main-Menu {
         $choice = Read-Host "Enter your choice"
         switch ($choice) {
             '1' { Invoke-WebRequest -URI $gameOptionsUrl | Invoke-Expression }
-            '2' { Software }
+            '2' { Invoke-WebRequest -URI $windowsOptionsUrl | Invoke-Expression }
             '3' {
                 Write-Host "Exiting script..."
                 Start-Sleep -Seconds 2
