@@ -101,6 +101,7 @@ else {
     Write-Output "Installation completed. Please verify if all vcredists are installed."
 }
 
+Start-Sleep -Seconds 10
 # GitHub URL
 $gistUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/main.ps1"
 Invoke-WebRequest -URI $gistUrl | Invoke-Expression
