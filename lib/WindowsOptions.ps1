@@ -49,20 +49,10 @@ function Software {
 
     # Loop through each app ID and install it using winget
     foreach ($app in $appList) {
-        try {
-            Write-Output "Installing $app..."
-            winget install --id $app --silent --accept-package-agreements --accept-source-agreements
-            if ($LASTEXITCODE -eq 0) {
-                Write-Output "$app installed successfully."
-            }   else {
-                Write-Output "Failed to install $app. Exit code: $LASTEXITCODE"
-            }
-        } catch {
-            Write-Output "An error occurred while installing $app: $_"
-        }
+    Write-Output "Installing $app..."
+    winget install --id $app --silent --accept-package-agreements --accept-source-agreements
     }
-}
-
+}   
 
 function WindowsMenu {
     do {
