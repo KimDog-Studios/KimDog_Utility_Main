@@ -3,6 +3,13 @@ $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $cabFiles = "$scriptDir\lib"
 $mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/main.ps1"
 
+function DownloadDocumentsCab {
+    $url = "https://drive.google.com/file/d/1EwiMessgpAOzgUnYy_9xEAActXHAiMAw/view?usp=drive_link"
+    $output = "$scriptDir\Temp"
+
+    Invoke-WebRequest -Uri $url -OutFile $output
+}
+
 function Documents {
     $cabFile = "$cabFiles\Documents_001.cab"
     $extractPath = "$env:USERPROFILE\Documents\"
