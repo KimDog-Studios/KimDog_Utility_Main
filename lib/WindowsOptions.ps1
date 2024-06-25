@@ -1,6 +1,7 @@
 # Define the base directory
 $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $cabFiles = "$scriptDir\lib"
+$mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/main.ps1"
 
 function Documents {
     $cabFile = "$cabFiles\Documents_001.cab"
@@ -39,3 +40,22 @@ function Documents {
 function Software {
     Write-Host "Work in progress..."
 }
+
+
+function WindowsMenu {
+    do {
+        Clear-Host
+        Write-Host "Please choose an option:"
+        Write-Host "1. Copy Document Files to User Documents Folder"
+        Write-Host "2. Install and Run Software"
+        Write-Host "3. Go to Previous Menu"
+        $choice = Read-Host "Enter your choice"
+        switch ($choice) {
+            '1' { Documents }
+            '2' { Software }
+            '3' { Invoke-WebRequest -URI $mainUrl | Invoke-Expression }
+        }
+    } while ($choice -ne '3')
+}
+
+WindowsMenu
