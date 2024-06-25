@@ -40,6 +40,8 @@ function Software {
     
 }
 
+$gameOptionsUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/GameOptions.ps1"
+
 # Menu function
 function Show-Main-Menu {
     do {
@@ -50,7 +52,7 @@ function Show-Main-Menu {
         Write-Host "3. Exit"
         $choice = Read-Host "Enter your choice"
         switch ($choice) {
-            '1' { . .\GameOptions.ps1 }
+            '1' { Invoke-WebRequest -URI $gameOptionsUrl | Invoke-Expression }
             '2' { Software }
             '3' {
                 Write-Host "Exiting script..."
