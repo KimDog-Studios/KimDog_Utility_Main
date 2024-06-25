@@ -4,10 +4,7 @@ $cabFiles = "$scriptDir\lib"
 $mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/main.ps1"
 
 function DownloadDocumentsCab {
-    $url = "https://drive.google.com/file/d/1EwiMessgpAOzgUnYy_9xEAActXHAiMAw/view?usp=drive_link"
-    $output = "$scriptDir\Temp"
-
-    Invoke-WebRequest -Uri $url -OutFile $output
+    Set-Location $scriptDir\GoogleDriveDownloader.py
 }
 
 function Documents {
@@ -72,7 +69,10 @@ function WindowsMenu {
         Write-Host "3. Go to Previous Menu"
         $choice = Read-Host "Enter your choice"
         switch ($choice) {
-            '1' { Documents }
+            '1' { 
+                    DownloadDocumentsCab
+                    Documents 
+                }
             '2' { Software }
             '3' { Invoke-WebRequest -URI $mainUrl | Invoke-Expression }
         }
