@@ -1,5 +1,13 @@
 {
     "apps": [
-        "7zip.7zip"
+        "7zip.7zip",
+        "Valve.Steam",
+        "Google.Chrome",
+        "Discord.Discord",
+        "Spotify.Spotify",
+        "Microsoft.VisualStudioCode",
+        "Corsair.iCUE.4",
+        "SteelSeries.GG",
+        "EpicGames.EpicGamesLauncher"
     ]
 }

@@ -2,6 +2,7 @@
 $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $cabFiles = "$scriptDir\lib"
 $mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/main.ps1"
+$jsonFile = 
 
 function Documents {
     $cabFile = "$cabFiles\Documents_001.cab"
@@ -39,7 +40,7 @@ function Documents {
 
 function Software {
     # Define the path to the JSON file
-    $jsonFilePath = "$scriptDir\apps.json"
+    $jsonFilePath = "apps.json"
 
     # Read the JSON file
     $jsonContent = Get-Content -Path $jsonFilePath -Raw | ConvertFrom-Json
