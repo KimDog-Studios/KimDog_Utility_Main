@@ -70,8 +70,8 @@ function Check_AllVcredists {
     return $missingVcredists
 }
 
-# Path to your batch script
-$batchScriptPath = ".\install_all.bat"
+# URL to your batch script on GitHub
+$batchScriptUrl = "https://raw.githubusercontent.com/yourusername/yourrepository/branchname/install_all.bat"
 
 # Check for missing vcredists
 $missingVcredists = Check_AllVcredists -versions $vcredist_versions
@@ -81,8 +81,21 @@ if ($missingVcredists.Count -eq 0) {
 }
 else {
     Write-Output "The following vcredists are missing: $missingVcredists"
-    Write-Output "Running batch script to install missing vcredists..."
-    Start-Process -FilePath $batchScriptPath -Wait
+    Write-Output "Running batch script from GitHub to install missing vcredists..."
+    
+    # Download the batch script
+    $batchScriptContent = Invoke-RestMethod -Uri $batchScriptUrl
+    
+    # Create a temporary batch file
+    $tempBatchFilePath = [System.IO.Path]::GetTempFileName() + ".bat"
+    Set-Content -Path $tempBatchFilePath -Value $batchScriptContent -Encoding ASCII
+    
+    # Run the batch script
+    Start-Process -FilePath $tempBatchFilePath -Wait
+    
+    # Remove the temporary batch file
+    Remove-Item -Path $tempBatchFilePath
+
     Write-Output "Installation completed. Please verify if all vcredists are installed."
 }
 
