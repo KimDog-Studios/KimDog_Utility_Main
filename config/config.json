@@ -5,10 +5,24 @@
         "Google.Chrome",
         "Discord.Discord",
         "Spotify.Spotify",
+        "Spicetify.Spicetify",
         "Microsoft.VisualStudioCode",
         "Corsair.iCUE.4",
         "SteelSeries.GG",
         "EpicGames.EpicGamesLauncher",
-        "Notepad++.Notepad++"
+        "Notepad++.Notepad++",
+        "NZXT.CAM",
+        "Logitech.GHUB",
+        "Logitech.Options",
+        "OPAutoClicker.OPAutoClicker",
+        "Mojang.MinecraftLauncher",
+        "Python.Python.3.11",
+        "OpenJS.NodeJS.LTS",
+        "Streamlabs.Streamlabs",
+        "Microsoft.VisualStudio.2022.Community"
+    ],
+
+    "windows":[
+        "AppVersion = 1.0"
     ]
 }

@@ -35,7 +35,57 @@ if (-not $wingetInstalled) {
     Remove-Item -Path $wingetInstallerPath -Force
 }
 
+# List of vcredist versions to check
+$vcredist_versions = @(
+    "2005", "2008", "2010", "2012", "2013", "2015", "2017", "2019", "2022"
+)
+
+# Function to check if a vcredist is installed
+function Is_VcredistInstalled {
+    param (
+        [string]$version
+    )
+    $regPath = "HKLM:\SOFTWARE\Classes\Installer\Products\*"
+    $keys = Get-ItemProperty -Path $regPath -ErrorAction SilentlyContinue
+
+    foreach ($key in $keys) {
+        if ($key.PSChildName -match $version) {
+            return $true
+        }
+    }
+    return $false
+}
+
+# Function to check all required vcredists
+function Check_AllVcredists {
+    param (
+        [array]$versions
+    )
+    $missingVcredists = @()
+    foreach ($version in $versions) {
+        if (-not (Is_VcredistInstalled -version $version)) {
+            $missingVcredists += $version
+        }
+    }
+    return $missingVcredists
+}
+
+# Path to your batch script
+$batchScriptPath = ".\lib\All_Visual_C\install_all.bat"
+
+# Check for missing vcredists
+$missingVcredists = Check-AllVcredists -versions $vcredist_versions
+
+if ($missingVcredists.Count -eq 0) {
+    Write-Output "All required vcredists are installed."
+}
+else {
+    Write-Output "The following vcredists are missing: $missingVcredists"
+    Write-Output "Running batch script to install missing vcredists..."
+    Start-Process -FilePath $batchScriptPath -Wait
+    Write-Output "Installation completed. Please verify if all vcredists are installed."
+}
+
 # GitHub URL
 $gistUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/main.ps1"
-
 Invoke-WebRequest -URI $gistUrl | Invoke-Expression
