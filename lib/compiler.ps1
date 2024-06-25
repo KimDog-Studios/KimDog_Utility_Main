@@ -71,7 +71,7 @@ function Check_AllVcredists {
 }
 
 # URL to your batch script on GitHub
-$batchScriptUrl = "https://raw.githubusercontent.com/yourusername/yourrepository/branchname/install_all.bat"
+$batchScriptUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/VSC/install_all.bat"
 
 # Check for missing vcredists
 $missingVcredists = Check_AllVcredists -versions $vcredist_versions
