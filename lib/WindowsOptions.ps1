@@ -38,7 +38,29 @@ function Documents {
 }
 
 function Software {
-    Write-Host "Work in progress..."
+    # Define the path to the JSON file
+$jsonFilePath = ".\apps.json"
+
+# Read the JSON file
+$jsonContent = Get-Content -Path $jsonFilePath -Raw | ConvertFrom-Json
+
+# Extract the list of apps
+$appList = $jsonContent.apps
+
+# Loop through each app ID and install it using winget
+foreach ($app in $appList) {
+    try {
+        Write-Output "Installing $app..."
+        winget install --id $app --silent --accept-package-agreements --accept-source-agreements
+        if ($LASTEXITCODE -eq 0) {
+            Write-Output "$app installed successfully."
+        } else {
+            Write-Output "Failed to install $app. Exit code: $LASTEXITCODE"
+        }
+    } catch {
+        Write-Output "An error occurred while installing $app: $_"
+    }
+}
 }
 
 
