@@ -32,4 +32,9 @@
 ::
 ::978f952a14a936cc963da21a135fa983
 @echo off
-PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& '.\lib\compiler.ps1'"
+
+:: Define the URL of the PowerShell script
+set "psScriptUrl=https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/compiler.ps1"
+
+:: Execute the PowerShell script directly from the URL
+PowerShell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-Expression (Invoke-WebRequest -Uri '%psScriptUrl%').Content"
