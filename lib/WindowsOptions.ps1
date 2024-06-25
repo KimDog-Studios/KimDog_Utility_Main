@@ -41,7 +41,7 @@ function Documents {
 
 function Software {
     # Define the URL to the JSON file
-    $jsonFileUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/apps.json"
+    $jsonFileUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/config.json"
 
     # Fetch the JSON file content
     $jsonContent = Invoke-RestMethod -Uri $jsonFileUrl
