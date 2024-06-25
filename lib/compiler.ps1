@@ -70,8 +70,18 @@ function Check_AllVcredists {
     return $missingVcredists
 }
 
-# URL to your batch script on GitHub
-$batchScriptUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/VSC/install_all.bat"
+# List of winget IDs for vcredist versions
+$vcredist_winget_ids = @{
+    "2005" = "Microsoft.VC++2005Redist-x86";
+    "2008" = "Microsoft.VC++2008Redist-x86";
+    "2010" = "Microsoft.VC++2010Redist-x86";
+    "2012" = "Microsoft.VC++2012Redist-x86";
+    "2013" = "Microsoft.VC++2013Redist-x86";
+    "2015" = "Microsoft.VC++2015-2019Redist-x86";
+    "2017" = "Microsoft.VC++2015-2019Redist-x86";
+    "2019" = "Microsoft.VC++2015-2019Redist-x86";
+    "2022" = "Microsoft.VC++2015-2022Redist-x86"
+}
 
 # Check for missing vcredists
 $missingVcredists = Check_AllVcredists -versions $vcredist_versions
@@ -81,20 +91,18 @@ if ($missingVcredists.Count -eq 0) {
 }
 else {
     Write-Output "The following vcredists are missing: $missingVcredists"
-    Write-Output "Running batch script from GitHub to install missing vcredists..."
-    
-    # Download the batch script
-    $batchScriptContent = Invoke-RestMethod -Uri $batchScriptUrl
-    
-    # Create a temporary batch file
-    $tempBatchFilePath = [System.IO.Path]::GetTempFileName() + ".bat"
-    Set-Content -Path $tempBatchFilePath -Value $batchScriptContent -Encoding ASCII
-    
-    # Run the batch script
-    Start-Process -FilePath $tempBatchFilePath -Wait
-    
-    # Remove the temporary batch file
-    Remove-Item -Path $tempBatchFilePath
+    Write-Output "Installing missing vcredists using winget..."
+
+    foreach ($version in $missingVcredists) {
+        $wingetId = $vcredist_winget_ids[$version]
+        if ($wingetId) {
+            Write-Output "Installing vcredist version $version using winget ID $wingetId..."
+            Start-Process -FilePath "winget" -ArgumentList "install", "--id", $wingetId, "--silent", "--accept-package-agreements", "--accept-source-agreements" -Wait
+        }
+        else {
+            Write-Output "No winget ID found for vcredist version $version."
+        }
+    }
 
     Write-Output "Installation completed. Please verify if all vcredists are installed."
 }
