@@ -4,7 +4,7 @@ $cabFiles = "$scriptDir\lib"
 $mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/main.ps1"
 
 function DownloadDocumentsCab {
-    Set-Location $scriptDir\GoogleDriveDownloader.py
+    Set-Location "$scriptDir\GoogleDriveDownloader.py"
 }
 
 function Documents {
