@@ -101,6 +101,7 @@ else {
     Write-Output "Installation completed. Please verify if all vcredists are installed."
 }
 
+Write-Output "Installation completed. Please Wait..." 
 Start-Sleep -Seconds 5
 
 # GitHub URL
