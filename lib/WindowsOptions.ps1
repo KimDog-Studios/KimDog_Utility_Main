@@ -3,10 +3,6 @@ $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $cabFiles = "$scriptDir\lib"
 $mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/main.ps1"
 
-function DownloadDocumentsCab {
-    Set-Location "$scriptDir\GoogleDriveDownloader.py"
-}
-
 function Documents {
     $cabFile = "$cabFiles\Documents_001.cab"
     $extractPath = "$env:USERPROFILE\Documents\"
@@ -66,8 +62,7 @@ function WindowsMenu {
         Write-Host "Please choose an option:"
         Write-Host "1. Copy Document Files to User Documents Folder"
         Write-Host "2. Install and Run Software"
-        Write-Host "3. Install nesecary Files"
-        Write-Host "4. Go to Previous Menu"
+        Write-Host "3. Go to Previous Menu"
         $choice = Read-Host "Enter your choice"
         switch ($choice) {
             '1' {  Documents }
@@ -75,7 +70,7 @@ function WindowsMenu {
             '3' { DownloadDocumentsCab }
             '4' { Invoke-WebRequest -URI $mainUrl | Invoke-Expression }
         }
-    } while ($choice -ne '4')
+    } while ($choice -ne '3')
 }
 
 WindowsMenu
