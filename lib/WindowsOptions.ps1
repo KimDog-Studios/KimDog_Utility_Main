@@ -72,8 +72,8 @@ function WindowsMenu {
         switch ($choice) {
             '1' {  Documents }
             '2' { Software }
-            '4' { DownloadDocumentsCab }
-            '3' { Invoke-WebRequest -URI $mainUrl | Invoke-Expression }
+            '3' { DownloadDocumentsCab }
+            '4' { Invoke-WebRequest -URI $mainUrl | Invoke-Expression }
         }
     } while ($choice -ne '4')
 }
