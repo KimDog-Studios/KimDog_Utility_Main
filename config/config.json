@@ -24,5 +24,17 @@
 
     "windows":[
         "AppVersion = 1.0"
-    ]
+    ],
+
+    "vcredist_versions": {
+        "2005": "Microsoft.VC++2005Redist-x86",
+        "2008": "Microsoft.VC++2008Redist-x86",
+        "2010": "Microsoft.VC++2010Redist-x86",
+        "2012": "Microsoft.VC++2012Redist-x86",
+        "2013": "Microsoft.VC++2013Redist-x86",
+        "2015": "Microsoft.VC++2015-2019Redist-x86",
+        "2017": "Microsoft.VC++2015-2019Redist-x86",
+        "2019": "Microsoft.VC++2015-2019Redist-x86",
+        "2022": "Microsoft.VC++2015-2022Redist-x86"
+    }
 }

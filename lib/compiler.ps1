@@ -35,10 +35,14 @@ if (-not $wingetInstalled) {
     Remove-Item -Path $wingetInstallerPath -Force
 }
 
+# URL to the configuration file on GitHub
+$jsonFileUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/config/config.json"
+
+# Fetch the configuration file directly
+$config = Invoke-RestMethod -Uri $jsonFileUrl
+
 # List of vcredist versions to check
-$vcredist_versions = @(
-    "2005", "2008", "2010", "2012", "2013", "2015", "2017", "2019", "2022"
-)
+$vcredist_versions = $config.vcredist_versions.Keys
 
 # Function to check if a vcredist is installed
 function Is_VcredistInstalled {
@@ -71,17 +75,7 @@ function Check_AllVcredists {
 }
 
 # List of winget IDs for vcredist versions
-$vcredist_winget_ids = @{
-    "2005" = "Microsoft.VC++2005Redist-x86";
-    "2008" = "Microsoft.VC++2008Redist-x86";
-    "2010" = "Microsoft.VC++2010Redist-x86";
-    "2012" = "Microsoft.VC++2012Redist-x86";
-    "2013" = "Microsoft.VC++2013Redist-x86";
-    "2015" = "Microsoft.VC++2015-2019Redist-x86";
-    "2017" = "Microsoft.VC++2015-2019Redist-x86";
-    "2019" = "Microsoft.VC++2015-2019Redist-x86";
-    "2022" = "Microsoft.VC++2015-2022Redist-x86"
-}
+$vcredist_winget_ids = $config.vcredist_versions
 
 # Check for missing vcredists
 $missingVcredists = Check_AllVcredists -versions $vcredist_versions
