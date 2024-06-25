@@ -66,14 +66,13 @@ function WindowsMenu {
         Write-Host "Please choose an option:"
         Write-Host "1. Copy Document Files to User Documents Folder"
         Write-Host "2. Install and Run Software"
-        Write-Host "3. Go to Previous Menu"
+        Write-Host "3. Install nesecary Files"
+        Write-Host "4. Go to Previous Menu"
         $choice = Read-Host "Enter your choice"
         switch ($choice) {
-            '1' { 
-                    DownloadDocumentsCab
-                    Documents 
-                }
+            '1' {  Documents }
             '2' { Software }
+            '4' { DownloadDocumentsCab }
             '3' { Invoke-WebRequest -URI $mainUrl | Invoke-Expression }
         }
     } while ($choice -ne '3')
