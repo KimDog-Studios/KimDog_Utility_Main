@@ -2,6 +2,8 @@
 $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $cabFiles = "$scriptDir\lib"
 
+$mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/main.ps1"
+
 function ETS2_Mods {
         $extractPath = "$env:USERPROFILE\Documents\Euro Truck Simulator 2\mod"
 
@@ -48,9 +50,7 @@ function GameMenu {
                 ATS_Mods
                 FS22_Mods
                 }
-            '5' {
-                . .\main.ps1
-            }
+            '5' { Invoke-WebRequest -URI $mainUrl | Invoke-Expression }
         }
     } while ($choice -ne '5')
 }
