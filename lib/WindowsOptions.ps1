@@ -56,7 +56,7 @@ function Software {
 
 function WindowsMenu {
     do {
-        Clear-Host
+        #Clear-Host
         Write-Host "Please choose an option:"
         Write-Host "1. Copy Document Files to User Documents Folder"
         Write-Host "2. Install and Run Software"
