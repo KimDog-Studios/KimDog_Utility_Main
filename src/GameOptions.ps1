@@ -1,18 +1,18 @@
 # Define the base directory
 $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
-$cabFiles = "$scriptDir\lib"
+$cabFiles = "$scriptDir\src"
 
-$mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/main.ps1"
+$mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/main.ps1"
 
 function ETS2_Mods {
-        $extractPath = "$env:USERPROFILE\Documents\Euro Truck Simulator 2\mod"
+    $extractPath = "$env:USERPROFILE\Documents\Euro Truck Simulator 2\mod"
 
-        Expand-Archive -Path "$cabFiles\ETS2_Mods_001.zip" -DestinationPath "$extractPath" -Force
-        Expand-Archive -Path "$cabFiles\ETS2_Mods_002.zip" -DestinationPath "$extractPath" -Force
+    Expand-Archive -Path "$cabFiles\ETS2_Mods_001.zip" -DestinationPath "$extractPath" -Force
+    Expand-Archive -Path "$cabFiles\ETS2_Mods_002.zip" -DestinationPath "$extractPath" -Force
 
-        Start-Sleep -Seconds 5
-        Clear-Host
-    }
+    Start-Sleep -Seconds 5
+    Clear-Host
+}
 
 function FS22_Mods {
     $extractPath = "$env:USERPROFILE\Documents\My Games\FarmingSimulator2022\mods"
@@ -43,13 +43,14 @@ function GameMenu {
         Write-Host "5. Go to Previous Menu"
         $choice = Read-Host "Enter your choice"
         switch ($choice) {
-            '1' {ETS2_Mods}
-            '2' {ATS_Mods}
-            '3' {FS22_Mods}
-            '4' {ETS2_Mods
+            '1' { ETS2_Mods }
+            '2' { ATS_Mods }
+            '3' { FS22_Mods }
+            '4' {
+                ETS2_Mods
                 ATS_Mods
                 FS22_Mods
-                }
+            }
             '5' { Invoke-WebRequest -URI $mainUrl | Invoke-Expression }
         }
     } while ($choice -ne '5')

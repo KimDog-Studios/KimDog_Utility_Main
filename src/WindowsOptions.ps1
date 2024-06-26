@@ -1,7 +1,7 @@
 # Define the base directory
 $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
-$cabFiles = "$scriptDir\lib"
-$mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/lib/main.ps1"
+$cabFiles = "$scriptDir\src"
+$mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/main.ps1"
 
 function Documents {
     $cabFile = "$cabFiles\Documents_001.cab"
