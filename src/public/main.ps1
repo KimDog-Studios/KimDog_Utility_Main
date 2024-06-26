@@ -18,7 +18,6 @@ $windowsOptionsUrl = $config.urls.windowsOptionsUrl
 
 if ([string]::IsNullOrEmpty($gameOptionsUrl) -or [string]::IsNullOrEmpty($windowsOptionsUrl)) {
     Write-Host "One or both of the URLs are null or empty in the config file."
-    exit 1
 }
 
 # Menu function
