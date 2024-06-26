@@ -128,7 +128,7 @@ function Software {
 
             # Run 'winget upgrade --all' command
             Write-Output "Upgrading all applications..."
-            Start-Process -FilePath "winget" -ArgumentList "upgrade --all" -NoNewWindow -Wait
+            Start-Process -FilePath "winget" -ArgumentList "upgrade --all" -ArgumentList"include-unknown"  -NoNewWindow -Wait
 
             # Show completion message in the UI thread
             [System.Windows.Forms.MessageBox]::Show("Upgrade completed.", "Upgrade")
