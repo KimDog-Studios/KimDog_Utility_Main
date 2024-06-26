@@ -93,6 +93,7 @@
   "urls": {
     "mainUrl": "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/public/main.ps1",
     "softwareGUI": "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/private/UI/SoftwareGUI.ps1",
-    "compilerUrl": "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/private/compiler.ps1"
+    "compilerUrl": "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/private/compiler.ps1",
+    "windowsOptionsUrl": "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/public/WindowsOptions.ps1"
   }
 }
