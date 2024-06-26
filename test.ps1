@@ -108,5 +108,5 @@ $tableLayoutPanel.Controls.Add($closeButton, 0, 4)
 # Add TableLayoutPanel to the form
 $form.Controls.Add($tableLayoutPanel)
 
-# Show the form
+# Show the GUI
 $form.ShowDialog()
