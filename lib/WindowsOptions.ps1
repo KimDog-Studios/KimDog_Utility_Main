@@ -74,9 +74,16 @@ function Software {
     $jsonContent = Invoke-RestMethod -Uri $jsonFileUrl
     $appList = $jsonContent.apps
 
+    $itemsToAdd = @()
     foreach ($app in $appList) {
-        $checkedListBox.Items.Add("$($app.name) - $($app.description)")
+        $itemsToAdd += "$($app.name) - $($app.description)"
     }
+
+    # Sort items alphabetically
+    $sortedItems = $itemsToAdd | Sort-Object
+
+    # Add sorted items to CheckedListBox
+    $checkedListBox.Items.AddRange($sortedItems)
 
     # Create an Install Selected button
     $installSelectedButton = New-Object System.Windows.Forms.Button
@@ -152,6 +159,7 @@ function Software {
 
     # Show the form
     $form.ShowDialog()
+
 }
 
 function WindowsMenu {
