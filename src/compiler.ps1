@@ -1,3 +1,16 @@
+# Function to check if running as administrator
+function Test-Administrator {
+    $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+    $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+# Relaunch script with elevated privileges if not running as admin
+if (-not (Test-Administrator)) {
+    Write-Output "Script is not running as administrator. Restarting with elevated privileges..."
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
+    exit
+}
+
 # Check if Winget is installed
 $wingetInstalled = $false
 
