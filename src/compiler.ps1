@@ -15,14 +15,26 @@ function Install-Winget {
     $wingetInstallerPath = "$env:TEMP\winget-cli.appxbundle"
 
     # Download the installer
-    Invoke-WebRequest -Uri $wingetUrl -OutFile $wingetInstallerPath
+    try {
+        Invoke-WebRequest -Uri $wingetUrl -OutFile $wingetInstallerPath -ErrorAction Stop
+    }
+    catch {
+        Write-Error "Failed to download Winget installer: $_"
+        return $false
+    }
 
     # Install winget silently
-    Start-Process -FilePath "powershell.exe" -ArgumentList "-Command `\"Add-AppxPackage -Path '$wingetInstallerPath' -ForceApplicationShutdown`\"" -Wait
-    
+    try {
+        Start-Process -FilePath "powershell.exe" -ArgumentList "-Command `\"Add-AppxPackage -Path '$wingetInstallerPath' -ForceApplicationShutdown`\"" -Wait -Verb RunAs
+    }
+    catch {
+        Write-Error "Failed to install Winget: $_"
+        return $false
+    }
+
     # Check if installation was successful
     if ($null -eq (Get-Command -Name winget -ErrorAction SilentlyContinue)) {
-        Write-Error "Failed to install Winget."
+        Write-Error "Failed to verify Winget installation."
         return $false
     }
     else {
