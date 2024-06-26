@@ -1,7 +1,4 @@
-Write-Host "=================================================================="
-Write-Host "--                                             Scripts must be run as Administrator                                                     ---" 
-Write-Host "-- Running as Admin Automitcically if not do it Manually | Right-Click Start -> Terminal(Admin) ---" 
-Write-Host "=================================================================="
+Write-Host "Start Script as Administrator"
 
 # URL of the remote script on GitHub
 $remoteScriptUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/private/compiler.ps1"
@@ -16,4 +13,5 @@ $encodedScript = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($sc
 Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -EncodedCommand $encodedScript" -Verb runAs
 
 # Close the current non-admin PowerShell session
+Start-Sleep 5
 exit
