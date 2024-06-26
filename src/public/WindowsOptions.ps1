@@ -2,6 +2,7 @@
 $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $cabFiles = "$scriptDir\src"
 $mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/public/main.ps1"
+$softwareGUI = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/private/UI/SoftwareGUI.ps1"
 
 function Documents {
     $cabFile = "$cabFiles\Documents_001.cab"
@@ -48,7 +49,7 @@ function WindowsMenu {
         $choice = Read-Host "Enter your choice"
         switch ($choice) {
             '1' { Documents }
-            '2' { Software }
+            '2' { Invoke-WebRequest -URI $mainUrl | Invoke-Expression }
             '3' { DownloadDocumentsCab }
             '4' { Invoke-WebRequest -URI $mainUrl | Invoke-Expression }
         }
