@@ -1,11 +1,44 @@
-# Function to check if running as administrator
-function Test-Administrator {
-    $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-    return $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+Function Check_RunAsAdministrator() {
+    #Get current user context
+    $CurrentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
+  
+    #Check user is running the script is member of Administrator Group
+    if ($CurrentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)) {
+        Write-host "Script is running with Administrator privileges!"
+    }
+    else {
+        #Create a new Elevated process to Start PowerShell
+        $ElevatedProcess = New-Object System.Diagnostics.ProcessStartInfo "PowerShell";
+ 
+        # Specify the current script path and name as a parameter
+        $ElevatedProcess.Arguments = "& '" + $script:MyInvocation.MyCommand.Path + "'"
+ 
+        #Set the Process to elevated
+        $ElevatedProcess.Verb = "runas"
+ 
+        #Start the new elevated process
+        [System.Diagnostics.Process]::Start($ElevatedProcess)
+ 
+        #Exit from the current, unelevated, process
+        Exit
+ 
+    }
+}
+ 
+#Check Script is running with Elevated Privileges
+Check_RunAsAdministrator
+
+# Check if Winget is installed
+$wingetInstalled = $false
+
+# Check if the winget command exists
+if ($null -ne (Get-Command -Name winget -ErrorAction SilentlyContinue)) {
+    $wingetInstalled = $true
+    Write-Output "Winget is already installed."
 }
 
-# Function to install Winget if not already installed
-function Install-Winget {
+# Install Winget if it's not already installed
+if (-not $wingetInstalled) {
     Write-Output "Winget is not installed. Downloading and installing..."
 
     # Define the URL to the latest stable release of winget-cli
@@ -15,79 +48,28 @@ function Install-Winget {
     $wingetInstallerPath = "$env:TEMP\winget-cli.appxbundle"
 
     # Download the installer
-    try {
-        Invoke-WebRequest -Uri $wingetUrl -OutFile $wingetInstallerPath -ErrorAction Stop
-    }
-    catch {
-        Write-Error "Failed to download Winget installer: $_"
-        return $false
-    }
+    Invoke-WebRequest -Uri $wingetUrl -OutFile $wingetInstallerPath
 
     # Install winget silently
-    try {
-        Start-Process -FilePath "powershell.exe" -ArgumentList "-Command `\"Add-AppxPackage -Path '$wingetInstallerPath' -ForceApplicationShutdown`\"" -Wait -Verb RunAs
-    }
-    catch {
-        Write-Error "Failed to install Winget: $_"
-        return $false
-    }
-
+    Start-Process -FilePath "powershell.exe" -ArgumentList "-Command", "Add-AppxPackage -Path '$wingetInstallerPath' -ForceApplicationShutdown" -Wait
+    
     # Check if installation was successful
     if ($null -eq (Get-Command -Name winget -ErrorAction SilentlyContinue)) {
-        Write-Error "Failed to verify Winget installation."
-        return $false
+        Write-Error "Failed to install Winget."
     }
     else {
         Write-Output "Winget installation completed successfully."
-        return $true
     }
 
     # Clean up the installer
     Remove-Item -Path $wingetInstallerPath -Force
 }
 
-# Check if running as administrator
-if (-not (Test-Administrator)) {
-    Write-Output "Script is not running as administrator. Restarting with elevated privileges..."
-    $params = @{
-        FilePath     = "powershell.exe"
-        ArgumentList = "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`""
-        Verb         = "RunAs"
-        PassThru     = $true
-    }
-    $process = Start-Process @params
-    $process.WaitForExit()
-    exit $process.ExitCode
-}
-
-# Script continues here with administrative privileges
-
-# Check if Winget is installed
-$wingetInstalled = $false
-if ($null -ne (Get-Command -Name winget -ErrorAction SilentlyContinue)) {
-    $wingetInstalled = $true
-    Write-Output "Winget is already installed."
-}
-else {
-    $wingetInstalled = Install-Winget
-}
-
-if (-not $wingetInstalled) {
-    Write-Error "Failed to install or verify Winget. Exiting script."
-    exit 1
-}
-
 # URL to the configuration file on GitHub
 $jsonFileUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/config/config.json"
 
 # Fetch the configuration file directly
-try {
-    $config = Invoke-RestMethod -Uri $jsonFileUrl -ErrorAction Stop
-}
-catch {
-    Write-Error "Failed to fetch configuration file: $_"
-    exit 1
-}
+$config = Invoke-RestMethod -Uri $jsonFileUrl
 
 # List of vcredist versions to check
 $vcredist_versions = $config.vcredist_versions.Keys
@@ -139,7 +121,7 @@ else {
         $wingetId = $vcredist_winget_ids[$version]
         if ($wingetId) {
             Write-Output "Installing vcredist version $version using winget ID $wingetId..."
-            Start-Process -FilePath "winget" -ArgumentList "install --id $wingetId --silent --accept-package-agreements --accept-source-agreements" -Wait
+            Start-Process -FilePath "winget" -ArgumentList "install", "--id", $wingetId, "--silent", "--accept-package-agreements", "--accept-source-agreements" -Wait
         }
         else {
             Write-Output "No winget ID found for vcredist version $version."
