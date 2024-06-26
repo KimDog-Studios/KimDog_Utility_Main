@@ -46,14 +46,14 @@ function Software {
     # Define the form
     $form = New-Object System.Windows.Forms.Form
     $form.Text = "Software Installer"
-    $form.Size = New-Object System.Drawing.Size(600, 500)  # Increased size for better spacing
+    $form.Size = New-Object System.Drawing.Size(600, 500)  # Initial size
     $form.StartPosition = "CenterScreen"
 
     # Create a TableLayoutPanel for automatic scaling
     $tableLayoutPanel = New-Object System.Windows.Forms.TableLayoutPanel
     $tableLayoutPanel.Dock = [System.Windows.Forms.DockStyle]::Fill
     $tableLayoutPanel.ColumnCount = 1
-    $tableLayoutPanel.RowCount = 3  # Adjusted row count to accommodate new layout
+    $tableLayoutPanel.RowCount = 3
     $tableLayoutPanel.ColumnStyles.Add((New-Object System.Windows.Forms.ColumnStyle([System.Windows.Forms.SizeType]::Percent, 100)))
     $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
     $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 70)))
@@ -65,12 +65,16 @@ function Software {
     $labelCheckedListBox.Font = New-Object System.Drawing.Font("Arial", 14, [System.Drawing.FontStyle]::Bold)
     $labelCheckedListBox.AutoSize = $true
 
+    # Create a Panel to enable scrolling
+    $scrollPanel = New-Object System.Windows.Forms.Panel
+    $scrollPanel.Dock = [System.Windows.Forms.DockStyle]::Fill
+    $scrollPanel.AutoScroll = $true
+
     # Create a CheckedListBox to display software options
     $checkedListBox = New-Object System.Windows.Forms.CheckedListBox
     $checkedListBox.Dock = [System.Windows.Forms.DockStyle]::Fill
-    $checkedListBox.Anchor = [System.Windows.Forms.AnchorStyles]::Top -bor [System.Windows.Forms.AnchorStyles]::Bottom -bor [System.Windows.Forms.AnchorStyles]::Left -bor [System.Windows.Forms.AnchorStyles]::Right
     $checkedListBox.BorderStyle = [System.Windows.Forms.BorderStyle]::FixedSingle
-    $checkedListBox.Font = New-Object System.Drawing.Font("Arial", 12, [System.Drawing.FontStyle]::Regular)  # Set font size
+    $checkedListBox.Font = New-Object System.Drawing.Font("Arial", 12, [System.Drawing.FontStyle]::Regular)
     $checkedListBox.ItemHeight = 24  # Increase item height for more spacing
 
     # Populate CheckedListBox with software names
@@ -89,20 +93,18 @@ function Software {
     # Add sorted items to CheckedListBox
     $checkedListBox.Items.AddRange($sortedItems)
 
-    # Create a TableLayoutPanel for buttons
-    $buttonPanel = New-Object System.Windows.Forms.TableLayoutPanel
+    # Add CheckedListBox to the scrollable Panel
+    $scrollPanel.Controls.Add($checkedListBox)
+
+    # Create a Panel for the action buttons
+    $buttonPanel = New-Object System.Windows.Forms.Panel
     $buttonPanel.Dock = [System.Windows.Forms.DockStyle]::Fill
-    $buttonPanel.ColumnCount = 2
-    $buttonPanel.RowCount = 2
-    $buttonPanel.ColumnStyles.Add((New-Object System.Windows.Forms.ColumnStyle([System.Windows.Forms.SizeType]::Percent, 50)))
-    $buttonPanel.ColumnStyles.Add((New-Object System.Windows.Forms.ColumnStyle([System.Windows.Forms.SizeType]::Percent, 50)))
-    $buttonPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
-    $buttonPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
+    $buttonPanel.AutoSize = $true
 
     # Create an Install Selected button
     $installSelectedButton = New-Object System.Windows.Forms.Button
     $installSelectedButton.Text = "Install Selected"
-    $installSelectedButton.Dock = [System.Windows.Forms.DockStyle]::Fill
+    $installSelectedButton.Dock = [System.Windows.Forms.DockStyle]::Top
     $installSelectedButton.AutoSize = $true  # Ensure button size is based on text content
 
     $installSelectedButton.Add_Click({
@@ -118,7 +120,7 @@ function Software {
     # Create an Install All button
     $installAllButton = New-Object System.Windows.Forms.Button
     $installAllButton.Text = "Install All"
-    $installAllButton.Dock = [System.Windows.Forms.DockStyle]::Fill
+    $installAllButton.Dock = [System.Windows.Forms.DockStyle]::Top
     $installAllButton.AutoSize = $true  # Ensure button size is based on text content
 
     $installAllButton.Add_Click({
@@ -133,7 +135,7 @@ function Software {
     # Create an Upgrade All button
     $upgradeAllButton = New-Object System.Windows.Forms.Button
     $upgradeAllButton.Text = "Upgrade All"
-    $upgradeAllButton.Dock = [System.Windows.Forms.DockStyle]::Fill
+    $upgradeAllButton.Dock = [System.Windows.Forms.DockStyle]::Top
     $upgradeAllButton.AutoSize = $true  # Ensure button size is based on text content
 
     $upgradeAllButton.Add_Click({
@@ -154,22 +156,22 @@ function Software {
     # Create a Close button
     $closeButton = New-Object System.Windows.Forms.Button
     $closeButton.Text = "Close"
-    $closeButton.Dock = [System.Windows.Forms.DockStyle]::Fill
+    $closeButton.Dock = [System.Windows.Forms.DockStyle]::Top
     $closeButton.AutoSize = $true  # Ensure button size is based on text content
 
     $closeButton.Add_Click({
             $form.Close()
         })
 
-    # Add buttons to the TableLayoutPanel
-    $buttonPanel.Controls.Add($installSelectedButton, 0, 0)
-    $buttonPanel.Controls.Add($installAllButton, 1, 0)
-    $buttonPanel.Controls.Add($upgradeAllButton, 0, 1)
-    $buttonPanel.Controls.Add($closeButton, 1, 1)
+    # Add buttons to the button Panel
+    $buttonPanel.Controls.Add($closeButton)
+    $buttonPanel.Controls.Add($upgradeAllButton)
+    $buttonPanel.Controls.Add($installAllButton)
+    $buttonPanel.Controls.Add($installSelectedButton)
 
-    # Add controls to TableLayoutPanel
+    # Add controls to the TableLayoutPanel
     $tableLayoutPanel.Controls.Add($labelCheckedListBox, 0, 0)
-    $tableLayoutPanel.Controls.Add($checkedListBox, 0, 1)
+    $tableLayoutPanel.Controls.Add($scrollPanel, 0, 1)
     $tableLayoutPanel.Controls.Add($buttonPanel, 0, 2)
 
     # Add TableLayoutPanel to the form
