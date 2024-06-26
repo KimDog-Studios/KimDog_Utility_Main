@@ -106,5 +106,5 @@ Start-Sleep -Seconds 5
 
 Clear-Host
 # GitHub URL
-$gistUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/main.ps1"
+$gistUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/public/main.ps1"
 Invoke-WebRequest -URI $gistUrl | Invoke-Expression
