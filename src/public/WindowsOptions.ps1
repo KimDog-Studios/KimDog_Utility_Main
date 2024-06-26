@@ -49,7 +49,7 @@ function WindowsMenu {
         $choice = Read-Host "Enter your choice"
         switch ($choice) {
             '1' { Documents }
-            '2' { Invoke-WebRequest -URI $mainUrl | Invoke-Expression }
+            '2' { Invoke-WebRequest -URI $softwareGUI | Invoke-Expression }
             '3' { DownloadDocumentsCab }
             '4' { Invoke-WebRequest -URI $mainUrl | Invoke-Expression }
         }
