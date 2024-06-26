@@ -1,0 +1,6 @@
+test/start.ps1
+test/WinFormsApp1.dll
+test/WinFormsApp1.exe
+test/WinFormsApp1.pdb
+test/WinFormsApp1.runtimeconfig.json
+test
