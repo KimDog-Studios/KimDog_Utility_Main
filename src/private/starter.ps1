@@ -1,3 +1,8 @@
+Write-Host "==================================================================" -Foregroundcolor Red
+Write-Host "--                                             Scripts must be run as Administrator                                                     ---" -Foregroundcolor Red
+Write-Host "-- Running as Admin Automitcically if not do it Manually | Right-Click Start -> Terminal(Admin) ---" -Foregroundcolor Red
+Write-Host "==================================================================" -Foregroundcolor Red
+
 # URL of the remote script on GitHub
 $remoteScriptUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/private/compiler.ps1"
 
