@@ -2,7 +2,7 @@
 $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $cabFiles = "$scriptDir\src"
 
-$mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/main.ps1"
+$mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/public/main.ps1"
 
 function ETS2_Mods {
     $extractPath = "$env:USERPROFILE\Documents\Euro Truck Simulator 2\mod"

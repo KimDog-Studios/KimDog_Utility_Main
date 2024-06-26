@@ -1,5 +1,5 @@
-$gameOptionsUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/GameOptions.ps1"
-$windowsOptionsUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/WindowsOptions.ps1"
+$gameOptionsUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/public/GameOptions.ps1"
+$windowsOptionsUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/public/WindowsOptions.ps1"
 
 # Menu function
 function Show-Main-Menu {
