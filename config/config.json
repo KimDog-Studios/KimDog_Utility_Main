@@ -1,106 +1,78 @@
 {
     "apps": [
-        {
-            "id": "7zip.7zip",
-            "name": "7-Zip",
-            "description": "File archiver with a high compression ratio"
-        },
-        {
-            "id": "Valve.Steam",
-            "name": "Steam",
-            "description": "Digital distribution platform for purchasing and playing video games"
-        },
-        {
-            "id": "Google.Chrome",
-            "name": "Google Chrome",
-            "description": "Fast, secure, and free web browser"
-        },
-        {
-            "id": "Discord.Discord",
-            "name": "Discord",
-            "description": "Voice, video, and text communication platform"
-        },
-        {
-            "id": "Spotify.Spotify",
-            "name": "Spotify",
-            "description": "Digital music service that gives you access to millions of songs"
-        },
-        {
-            "id": "Spicetify.Spicetify",
-            "name": "Spicetify",
-            "description": "Customization tool for Spotify desktop client"
-        },
-        {
-            "id": "Microsoft.VisualStudioCode",
-            "name": "Visual Studio Code",
-            "description": "Free source-code editor made by Microsoft"
-        },
-        {
-            "id": "Corsair.iCUE.4",
-            "name": "Corsair iCUE",
-            "description": "Software for customizing Corsair peripherals and components"
-        },
-        {
-            "id": "SteelSeries.GG",
-            "name": "SteelSeries GG",
-            "description": "Utility for managing SteelSeries gaming peripherals"
-        },
-        {
-            "id": "EpicGames.EpicGamesLauncher",
-            "name": "Epic Games Launcher",
-            "description": "Launcher for Epic Games titles and store"
-        },
-        {
-            "id": "Notepad++.Notepad++",
-            "name": "Notepad++",
-            "description": "Free source code editor and Notepad replacement"
-        },
-        {
-            "id": "NZXT.CAM",
-            "name": "NZXT CAM",
-            "description": "Software for monitoring and controlling NZXT hardware"
-        },
-        {
-            "id": "Logitech.GHUB",
-            "name": "Logitech G HUB",
-            "description": "Software for customizing Logitech gaming peripherals"
-        },
-        {
-            "id": "Logitech.Options",
-            "name": "Logitech Options",
-            "description": "Software for Logitech non-gaming peripherals"
-        },
-        {
-            "id": "OPAutoClicker.OPAutoClicker",
-            "name": "OP Auto Clicker",
-            "description": "Automation tool for clicking in games or other applications"
-        },
-        {
-            "id": "Mojang.MinecraftLauncher",
-            "name": "Minecraft Launcher",
-            "description": "Launcher for Minecraft Java Edition"
-        },
-        {
-            "id": "Python.Python.3.11",
-            "name": "Python 3.11",
-            "description": "Python programming language interpreter and libraries"
-        },
-        {
-            "id": "OpenJS.NodeJS.LTS",
-            "name": "Node.js LTS",
-            "description": "JavaScript runtime built on Chrome's V8 JavaScript engine"
-        },
-        {
-            "id": "Streamlabs.Streamlabs",
-            "name": "Streamlabs",
-            "description": "Software for streaming and recording content"
-        },
-        {
-            "id": "Microsoft.VisualStudio.2022.Community",
-            "name": "Visual Studio 2022 Community",
-            "description": "Integrated development environment (IDE) from Microsoft"
-        }
-    ],
+    {
+      "name": "7-Zip",
+      "id": "7zip.7zip",
+      "description": "File archiver with a high compression ratio",
+      "type": "Utilities"
+    },
+    {
+      "name": "Steam",
+      "id": "Valve.Steam",
+      "description": "Digital distribution platform for video games",
+      "type": "Games"
+    },
+    {
+      "name": "Google Chrome",
+      "id": "Google.Chrome",
+      "description": "Fast, secure, and free web browser",
+      "type": "Web Browsers"
+    },
+    {
+      "name": "Discord",
+      "id": "Discord.Discord",
+      "description": "Chat and communication platform for gamers",
+      "type": "Productivity Tools"
+    },
+    {
+      "name": "Spotify",
+      "id": "Spotify.Spotify",
+      "description": "Music streaming service",
+      "type": "Entertainment"
+    },
+    {
+      "name": "Visual Studio Code",
+      "id": "Microsoft.VisualStudioCode",
+      "description": "Source-code editor developed by Microsoft",
+      "type": "Development Tools"
+    },
+    {
+      "name": "Notepad++",
+      "id": "Notepad++.Notepad++",
+      "description": "Free source code editor",
+      "type": "Development Tools"
+    },
+    {
+      "name": "Minecraft Launcher",
+      "id": "Mojang.MinecraftLauncher",
+      "description": "Game launcher for Minecraft",
+      "type": "Games"
+    },
+    {
+      "name": "Python 3.11",
+      "id": "Python.Python.3.11",
+      "description": "Python programming language interpreter",
+      "type": "Development Tools"
+    },
+    {
+      "name": "Node.js LTS",
+      "id": "OpenJS.NodeJS.LTS",
+      "description": "JavaScript runtime built on Chrome's V8 JavaScript engine",
+      "type": "Development Tools"
+    },
+    {
+      "name": "Streamlabs",
+      "id": "Streamlabs.Streamlabs",
+      "description": "Stream management tool for streamers",
+      "type": "Productivity Tools"
+    },
+    {
+      "name": "Visual Studio 2022 Community",
+      "id": "Microsoft.VisualStudio.2022.Community",
+      "description": "Integrated development environment",
+      "type": "Development Tools"
+    }
+  ],
     "windows":[
         "AppVersion = 1.0"
     ],
