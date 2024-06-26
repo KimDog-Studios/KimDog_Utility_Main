@@ -44,7 +44,7 @@ function WindowsMenu {
         Clear-Host
         Write-Host "Please choose an option:"
         Write-Host "1. Copy Document Files to User Documents Folder"
-        Write-Host "2. Install and Run Software"
+        Write-Host "2. Software Manager"
         Write-Host "3. Go to Previous Menu"
         $choice = Read-Host "Enter your choice"
         switch ($choice) {
