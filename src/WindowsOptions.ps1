@@ -46,7 +46,7 @@ function Software {
     # Define the form
     $form = New-Object System.Windows.Forms.Form
     $form.Text = "Software Installer"
-    $form.Size = New-Object System.Drawing.Size(600, 500)  # Initial size
+    $form.Size = New-Object System.Drawing.Size(800, 600)  # Increased initial size for better layout
     $form.StartPosition = "CenterScreen"
 
     # Create a TableLayoutPanel for automatic scaling
@@ -72,10 +72,11 @@ function Software {
 
     # Create a CheckedListBox to display software options
     $checkedListBox = New-Object System.Windows.Forms.CheckedListBox
-    $checkedListBox.Dock = [System.Windows.Forms.DockStyle]::Fill
+    $checkedListBox.Dock = [System.Windows.Forms.DockStyle]::Top
     $checkedListBox.BorderStyle = [System.Windows.Forms.BorderStyle]::FixedSingle
     $checkedListBox.Font = New-Object System.Drawing.Font("Arial", 12, [System.Drawing.FontStyle]::Regular)
     $checkedListBox.ItemHeight = 24  # Increase item height for more spacing
+    $checkedListBox.HorizontalScrollbar = $true  # Enable horizontal scrolling
 
     # Populate CheckedListBox with software names
     $jsonFileUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/config/config.json"
@@ -98,7 +99,7 @@ function Software {
 
     # Create a Panel for the action buttons
     $buttonPanel = New-Object System.Windows.Forms.Panel
-    $buttonPanel.Dock = [System.Windows.Forms.DockStyle]::Fill
+    $buttonPanel.Dock = [System.Windows.Forms.DockStyle]::Top
     $buttonPanel.AutoSize = $true
 
     # Create an Install Selected button
