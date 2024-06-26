@@ -1,5 +1,5 @@
 {
-    "apps": [
+  "apps": [
     {
       "name": "7-Zip",
       "id": "7zip.7zip",
@@ -79,18 +79,20 @@
       "type": "System Monitoring Tools"
     }
   ],
-    "windows":[
-        "AppVersion = 1.0"
-    ],
-    "vcredist_versions": {
-        "2005": "Microsoft.VC++2005Redist-x86",
-        "2008": "Microsoft.VC++2008Redist-x86",
-        "2010": "Microsoft.VC++2010Redist-x86",
-        "2012": "Microsoft.VC++2012Redist-x86",
-        "2013": "Microsoft.VC++2013Redist-x86",
-        "2015": "Microsoft.VC++2015-2019Redist-x86",
-        "2017": "Microsoft.VC++2015-2019Redist-x86",
-        "2019": "Microsoft.VC++2015-2019Redist-x86",
-        "2022": "Microsoft.VC++2015-2022Redist-x86"
-    }
+  "vcredist_versions": {
+    "2005": "Microsoft.VC++2005Redist-x86",
+    "2008": "Microsoft.VC++2008Redist-x86",
+    "2010": "Microsoft.VC++2010Redist-x86",
+    "2012": "Microsoft.VC++2012Redist-x86",
+    "2013": "Microsoft.VC++2013Redist-x86",
+    "2015": "Microsoft.VC++2015-2019Redist-x86",
+    "2017": "Microsoft.VC++2015-2019Redist-x86",
+    "2019": "Microsoft.VC++2015-2019Redist-x86",
+    "2022": "Microsoft.VC++2015-2022Redist-x86"
+  },
+  "urls": {
+    "mainUrl": "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/public/main.ps1",
+    "softwareGUI": "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/private/UI/SoftwareGUI.ps1",
+    "compilerUrl": "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/private/compiler.ps1"
+  }
 }
