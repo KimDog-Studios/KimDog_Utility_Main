@@ -71,6 +71,12 @@
       "id": "Microsoft.VisualStudio.2022.Community",
       "description": "Integrated development environment",
       "type": "Development Tools"
+    },
+    {
+      "name": "MSI AfterBurner",
+      "id": "Guru3D.Afterburner",
+      "description": "MSI Afterburner is the most used graphics card software for a good reason. It‘s reliable, works on any card (even non-MSI!), gives you complete control, lets you monitor your hardware in real-time and best of all: it’s completely free! MSI Afterburner is available completely free of charge and can be used with graphics cards from all brands.",
+      "type": "System Monitoring Tools"
     }
   ],
     "windows":[
