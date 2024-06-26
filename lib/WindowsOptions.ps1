@@ -49,12 +49,32 @@ function Software {
     # Extract the list of apps
     $appList = $jsonContent.apps
 
-    # Loop through each app ID and install it using winget
-    foreach ($app in $appList) {
-        Write-Output "Installing $app..."
-        winget install --id $app --silent --accept-package-agreements --accept-source-agreements
+    Clear-Host
+    Write-Host "Choose software to install (`all` to install all):"
+    Write-Host ""
+
+    # Display the list of apps for selection
+    for ($i = 0; $i -lt $appList.Count; $i++) {
+        Write-Host "$($i+1). $($appList[$i].name) - $($appList[$i].description)"
     }
-}   
+    Write-Host ""
+
+    $choice = Read-Host "Enter app number or 'all' to install all"
+
+    if ($choice -eq 'all') {
+        # Install all apps
+        foreach ($app in $appList) {
+            Write-Output "Installing $($app.name)..."
+            winget install --id $app.id --silent --accept-package-agreements --accept-source-agreements
+        }
+    }
+    else {
+        # Install selected app
+        $selectedApp = $appList[([int]$choice) - 1]
+        Write-Output "Installing $($selectedApp.name)..."
+        winget install --id $selectedApp.id --silent --accept-package-agreements --accept-source-agreements
+    }
+}
 
 function WindowsMenu {
     do {
@@ -65,7 +85,7 @@ function WindowsMenu {
         Write-Host "3. Go to Previous Menu"
         $choice = Read-Host "Enter your choice"
         switch ($choice) {
-            '1' {  Documents }
+            '1' { Documents }
             '2' { Software }
             '3' { DownloadDocumentsCab }
             '4' { Invoke-WebRequest -URI $mainUrl | Invoke-Expression }
