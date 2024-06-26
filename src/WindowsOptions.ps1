@@ -48,7 +48,7 @@ function Software {
     $form.Text = "Software Installer"
     $form.Size = New-Object System.Drawing.Size(600, 400)  # Initial size
     $form.StartPosition = "CenterScreen"
-
+ 
     # Create a TableLayoutPanel for automatic scaling
     $tableLayoutPanel = New-Object System.Windows.Forms.TableLayoutPanel
     $tableLayoutPanel.Dock = [System.Windows.Forms.DockStyle]::Fill
