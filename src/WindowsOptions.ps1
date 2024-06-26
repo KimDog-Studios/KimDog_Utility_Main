@@ -46,20 +46,27 @@ function Software {
     # Define the form
     $form = New-Object System.Windows.Forms.Form
     $form.Text = "Software Installer"
-    $form.Size = New-Object System.Drawing.Size(600, 400)  # Initial size
+    $form.Size = New-Object System.Drawing.Size(600, 500)  # Increased size for better spacing
     $form.StartPosition = "CenterScreen"
- 
+
     # Create a TableLayoutPanel for automatic scaling
     $tableLayoutPanel = New-Object System.Windows.Forms.TableLayoutPanel
     $tableLayoutPanel.Dock = [System.Windows.Forms.DockStyle]::Fill
     $tableLayoutPanel.ColumnCount = 1
-    $tableLayoutPanel.RowCount = 5  # Updated row count to accommodate new button
+    $tableLayoutPanel.RowCount = 6  # Updated row count to accommodate labels
     $tableLayoutPanel.ColumnStyles.Add((New-Object System.Windows.Forms.ColumnStyle([System.Windows.Forms.SizeType]::Percent, 100)))
-    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 70)))
-    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 8)))
-    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 8)))
-    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 8)))
-    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 6)))
+    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
+    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 60)))
+    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
+    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
+    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
+    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
+
+    # Create a label for the CheckedListBox
+    $labelCheckedListBox = New-Object System.Windows.Forms.Label
+    $labelCheckedListBox.Text = "Available Software:"
+    $labelCheckedListBox.Font = New-Object System.Drawing.Font("Arial", 14, [System.Drawing.FontStyle]::Bold)
+    $labelCheckedListBox.AutoSize = $true
 
     # Create a CheckedListBox to display software options
     $checkedListBox = New-Object System.Windows.Forms.CheckedListBox
@@ -85,11 +92,29 @@ function Software {
     # Add sorted items to CheckedListBox
     $checkedListBox.Items.AddRange($sortedItems)
 
+    # Create a GroupBox for the action buttons
+    $groupBoxButtons = New-Object System.Windows.Forms.GroupBox
+    $groupBoxButtons.Text = "Actions"
+    $groupBoxButtons.Font = New-Object System.Drawing.Font("Arial", 12, [System.Drawing.FontStyle]::Bold)
+    $groupBoxButtons.Dock = [System.Windows.Forms.DockStyle]::Fill
+    $groupBoxButtons.Padding = "10, 10, 10, 10"
+
+    # Create a TableLayoutPanel for buttons inside the GroupBox
+    $tableLayoutPanelButtons = New-Object System.Windows.Forms.TableLayoutPanel
+    $tableLayoutPanelButtons.Dock = [System.Windows.Forms.DockStyle]::Fill
+    $tableLayoutPanelButtons.ColumnCount = 1
+    $tableLayoutPanelButtons.RowCount = 4
+    $tableLayoutPanelButtons.ColumnStyles.Add((New-Object System.Windows.Forms.ColumnStyle([System.Windows.Forms.SizeType]::Percent, 100)))
+    $tableLayoutPanelButtons.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
+    $tableLayoutPanelButtons.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
+    $tableLayoutPanelButtons.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
+    $tableLayoutPanelButtons.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
+
     # Create an Install Selected button
     $installSelectedButton = New-Object System.Windows.Forms.Button
-    $installSelectedButton.Dock = [System.Windows.Forms.DockStyle]::Fill
     $installSelectedButton.Text = "Install Selected"
     $installSelectedButton.AutoSize = $true  # Ensure button size is based on text content
+    $installSelectedButton.Margin = "5, 5, 5, 5"
 
     $installSelectedButton.Add_Click({
             # Install selected applications
@@ -103,9 +128,9 @@ function Software {
 
     # Create an Install All button
     $installAllButton = New-Object System.Windows.Forms.Button
-    $installAllButton.Dock = [System.Windows.Forms.DockStyle]::Fill
     $installAllButton.Text = "Install All"
     $installAllButton.AutoSize = $true  # Ensure button size is based on text content
+    $installAllButton.Margin = "5, 5, 5, 5"
 
     $installAllButton.Add_Click({
             # Install all applications
@@ -118,9 +143,9 @@ function Software {
 
     # Create an Upgrade All button
     $upgradeAllButton = New-Object System.Windows.Forms.Button
-    $upgradeAllButton.Dock = [System.Windows.Forms.DockStyle]::Fill
     $upgradeAllButton.Text = "Upgrade All"
     $upgradeAllButton.AutoSize = $true  # Ensure button size is based on text content
+    $upgradeAllButton.Margin = "5, 5, 5, 5"
 
     $upgradeAllButton.Add_Click({
             # Disable the Upgrade All button while processing
@@ -128,7 +153,7 @@ function Software {
 
             # Run 'winget upgrade --all' command
             Write-Output "Upgrading all applications..."
-            Start-Process -FilePath "winget" -ArgumentList "upgrade --all"  -NoNewWindow -Wait
+            Start-Process -FilePath "winget" -ArgumentList "upgrade --all" -NoNewWindow -Wait
 
             # Show completion message in the UI thread
             [System.Windows.Forms.MessageBox]::Show("Upgrade completed.", "Upgrade")
@@ -139,20 +164,27 @@ function Software {
 
     # Create a Close button
     $closeButton = New-Object System.Windows.Forms.Button
-    $closeButton.Dock = [System.Windows.Forms.DockStyle]::Fill
     $closeButton.Text = "Close"
     $closeButton.AutoSize = $true  # Ensure button size is based on text content
+    $closeButton.Margin = "5, 5, 5, 5"
 
     $closeButton.Add_Click({
             $form.Close()
         })
 
+    # Add buttons to the TableLayoutPanel inside the GroupBox
+    $tableLayoutPanelButtons.Controls.Add($installSelectedButton, 0, 0)
+    $tableLayoutPanelButtons.Controls.Add($installAllButton, 0, 1)
+    $tableLayoutPanelButtons.Controls.Add($upgradeAllButton, 0, 2)
+    $tableLayoutPanelButtons.Controls.Add($closeButton, 0, 3)
+
+    # Add the TableLayoutPanelButtons to the GroupBox
+    $groupBoxButtons.Controls.Add($tableLayoutPanelButtons)
+
     # Add controls to TableLayoutPanel
-    $tableLayoutPanel.Controls.Add($checkedListBox, 0, 0)
-    $tableLayoutPanel.Controls.Add($installSelectedButton, 0, 1)
-    $tableLayoutPanel.Controls.Add($installAllButton, 0, 2)
-    $tableLayoutPanel.Controls.Add($upgradeAllButton, 0, 3)
-    $tableLayoutPanel.Controls.Add($closeButton, 0, 4)
+    $tableLayoutPanel.Controls.Add($labelCheckedListBox, 0, 0)
+    $tableLayoutPanel.Controls.Add($checkedListBox, 0, 1)
+    $tableLayoutPanel.Controls.Add($groupBoxButtons, 0, 2)
 
     # Add TableLayoutPanel to the form
     $form.Controls.Add($tableLayoutPanel)
