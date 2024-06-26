@@ -7,8 +7,10 @@ function Test-Administrator {
 # Relaunch script with elevated privileges if not running as admin
 if (-not (Test-Administrator)) {
     Write-Output "Script is not running as administrator. Restarting with elevated privileges..."
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
-    Start-Sleep -Seconds 5  # Give some time for the elevated process to start
+    Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
+    Write-Output "Waiting for elevated process to start..."
+    Start-Sleep -Seconds 10  # Increased sleep time for the elevated process to start
+    exit
 }
 
 # Confirming script is running with elevated privileges
@@ -37,7 +39,7 @@ if (-not $wingetInstalled) {
     Invoke-WebRequest -Uri $wingetUrl -OutFile $wingetInstallerPath
 
     # Install winget silently
-    Start-Process -FilePath "powershell.exe" -ArgumentList "-Command", "Add-AppxPackage -Path '$wingetInstallerPath' -ForceApplicationShutdown" -Wait
+    Start-Process -FilePath "powershell.exe" -ArgumentList "-Command `\"Add-AppxPackage -Path '$wingetInstallerPath' -ForceApplicationShutdown`\"" -Wait
     
     # Check if installation was successful
     if ($null -eq (Get-Command -Name winget -ErrorAction SilentlyContinue)) {
@@ -107,7 +109,7 @@ else {
         $wingetId = $vcredist_winget_ids[$version]
         if ($wingetId) {
             Write-Output "Installing vcredist version $version using winget ID $wingetId..."
-            Start-Process -FilePath "winget" -ArgumentList "install", "--id", $wingetId, "--silent", "--accept-package-agreements", "--accept-source-agreements" -Wait
+            Start-Process -FilePath "winget" -ArgumentList "install --id $wingetId --silent --accept-package-agreements --accept-source-agreements" -Wait
         }
         else {
             Write-Output "No winget ID found for vcredist version $version."
