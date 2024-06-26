@@ -1,5 +1,5 @@
 # URL of the remote script on GitHub
-$remoteScriptUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/compiler.ps1"
+$remoteScriptUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/private/compiler.ps1"
 
 # Download the remote script content
 $scriptContent = Invoke-WebRequest -Uri $remoteScriptUrl -UseBasicParsing | Select-Object -ExpandProperty Content
