@@ -4,12 +4,16 @@ function Test-Administrator {
     return $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 }
 
+# Log the current state and paths
+Write-Output "Running script: $PSCommandPath"
+Write-Output "Current directory: $(Get-Location)"
+
 # Relaunch script with elevated privileges if not running as admin
 if (-not (Test-Administrator)) {
     Write-Output "Script is not running as administrator. Restarting with elevated privileges..."
-    Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
-    Write-Output "Waiting for elevated process to start..."
-    Start-Sleep -Seconds 10  # Increased sleep time for the elevated process to start
+    $process = Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs -PassThru
+    Write-Output "Waiting for elevated process (PID: $($process.Id)) to start..."
+    $process.WaitForExit()
     exit
 }
 
