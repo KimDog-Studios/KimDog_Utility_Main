@@ -53,13 +53,10 @@ function Software {
     $tableLayoutPanel = New-Object System.Windows.Forms.TableLayoutPanel
     $tableLayoutPanel.Dock = [System.Windows.Forms.DockStyle]::Fill
     $tableLayoutPanel.ColumnCount = 1
-    $tableLayoutPanel.RowCount = 6  # Updated row count to accommodate labels
+    $tableLayoutPanel.RowCount = 3  # Adjusted row count to accommodate new layout
     $tableLayoutPanel.ColumnStyles.Add((New-Object System.Windows.Forms.ColumnStyle([System.Windows.Forms.SizeType]::Percent, 100)))
     $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
-    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 60)))
-    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
-    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
-    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
+    $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 70)))
     $tableLayoutPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
 
     # Create a label for the CheckedListBox
@@ -92,29 +89,21 @@ function Software {
     # Add sorted items to CheckedListBox
     $checkedListBox.Items.AddRange($sortedItems)
 
-    # Create a GroupBox for the action buttons
-    $groupBoxButtons = New-Object System.Windows.Forms.GroupBox
-    $groupBoxButtons.Text = "Actions"
-    $groupBoxButtons.Font = New-Object System.Drawing.Font("Arial", 12, [System.Drawing.FontStyle]::Bold)
-    $groupBoxButtons.Dock = [System.Windows.Forms.DockStyle]::Fill
-    $groupBoxButtons.Padding = "10, 10, 10, 10"
-
-    # Create a TableLayoutPanel for buttons inside the GroupBox
-    $tableLayoutPanelButtons = New-Object System.Windows.Forms.TableLayoutPanel
-    $tableLayoutPanelButtons.Dock = [System.Windows.Forms.DockStyle]::Fill
-    $tableLayoutPanelButtons.ColumnCount = 1
-    $tableLayoutPanelButtons.RowCount = 4
-    $tableLayoutPanelButtons.ColumnStyles.Add((New-Object System.Windows.Forms.ColumnStyle([System.Windows.Forms.SizeType]::Percent, 100)))
-    $tableLayoutPanelButtons.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
-    $tableLayoutPanelButtons.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
-    $tableLayoutPanelButtons.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
-    $tableLayoutPanelButtons.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
+    # Create a TableLayoutPanel for buttons
+    $buttonPanel = New-Object System.Windows.Forms.TableLayoutPanel
+    $buttonPanel.Dock = [System.Windows.Forms.DockStyle]::Fill
+    $buttonPanel.ColumnCount = 2
+    $buttonPanel.RowCount = 2
+    $buttonPanel.ColumnStyles.Add((New-Object System.Windows.Forms.ColumnStyle([System.Windows.Forms.SizeType]::Percent, 50)))
+    $buttonPanel.ColumnStyles.Add((New-Object System.Windows.Forms.ColumnStyle([System.Windows.Forms.SizeType]::Percent, 50)))
+    $buttonPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
+    $buttonPanel.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::AutoSize)))
 
     # Create an Install Selected button
     $installSelectedButton = New-Object System.Windows.Forms.Button
     $installSelectedButton.Text = "Install Selected"
+    $installSelectedButton.Dock = [System.Windows.Forms.DockStyle]::Fill
     $installSelectedButton.AutoSize = $true  # Ensure button size is based on text content
-    $installSelectedButton.Margin = "5, 5, 5, 5"
 
     $installSelectedButton.Add_Click({
             # Install selected applications
@@ -129,8 +118,8 @@ function Software {
     # Create an Install All button
     $installAllButton = New-Object System.Windows.Forms.Button
     $installAllButton.Text = "Install All"
+    $installAllButton.Dock = [System.Windows.Forms.DockStyle]::Fill
     $installAllButton.AutoSize = $true  # Ensure button size is based on text content
-    $installAllButton.Margin = "5, 5, 5, 5"
 
     $installAllButton.Add_Click({
             # Install all applications
@@ -144,8 +133,8 @@ function Software {
     # Create an Upgrade All button
     $upgradeAllButton = New-Object System.Windows.Forms.Button
     $upgradeAllButton.Text = "Upgrade All"
+    $upgradeAllButton.Dock = [System.Windows.Forms.DockStyle]::Fill
     $upgradeAllButton.AutoSize = $true  # Ensure button size is based on text content
-    $upgradeAllButton.Margin = "5, 5, 5, 5"
 
     $upgradeAllButton.Add_Click({
             # Disable the Upgrade All button while processing
@@ -165,26 +154,23 @@ function Software {
     # Create a Close button
     $closeButton = New-Object System.Windows.Forms.Button
     $closeButton.Text = "Close"
+    $closeButton.Dock = [System.Windows.Forms.DockStyle]::Fill
     $closeButton.AutoSize = $true  # Ensure button size is based on text content
-    $closeButton.Margin = "5, 5, 5, 5"
 
     $closeButton.Add_Click({
             $form.Close()
         })
 
-    # Add buttons to the TableLayoutPanel inside the GroupBox
-    $tableLayoutPanelButtons.Controls.Add($installSelectedButton, 0, 0)
-    $tableLayoutPanelButtons.Controls.Add($installAllButton, 0, 1)
-    $tableLayoutPanelButtons.Controls.Add($upgradeAllButton, 0, 2)
-    $tableLayoutPanelButtons.Controls.Add($closeButton, 0, 3)
-
-    # Add the TableLayoutPanelButtons to the GroupBox
-    $groupBoxButtons.Controls.Add($tableLayoutPanelButtons)
+    # Add buttons to the TableLayoutPanel
+    $buttonPanel.Controls.Add($installSelectedButton, 0, 0)
+    $buttonPanel.Controls.Add($installAllButton, 1, 0)
+    $buttonPanel.Controls.Add($upgradeAllButton, 0, 1)
+    $buttonPanel.Controls.Add($closeButton, 1, 1)
 
     # Add controls to TableLayoutPanel
     $tableLayoutPanel.Controls.Add($labelCheckedListBox, 0, 0)
     $tableLayoutPanel.Controls.Add($checkedListBox, 0, 1)
-    $tableLayoutPanel.Controls.Add($groupBoxButtons, 0, 2)
+    $tableLayoutPanel.Controls.Add($buttonPanel, 0, 2)
 
     # Add TableLayoutPanel to the form
     $form.Controls.Add($tableLayoutPanel)
