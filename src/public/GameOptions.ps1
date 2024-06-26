@@ -2,7 +2,27 @@
 $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $cabFiles = "$scriptDir\src"
 
-$mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/public/main.ps1"
+# URL to the configuration file on GitHub
+$jsonFileUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/config/config.json"
+
+# Fetch the configuration file directly
+try {
+    $config = Invoke-RestMethod -Uri $jsonFileUrl
+    Write-Host "Config file fetched successfully."
+}
+catch {
+    Write-Host "Failed to fetch config file."
+    Write-Host $_.Exception.Message
+    exit 1
+}
+
+# Access the URLs from the JSON configuration
+$mainUrl = $config.urls.mainUrl
+
+if ([string]::IsNullOrEmpty($mainUrl)) {
+    Write-Host "Main script URL is null or empty in the config file."
+    exit 1
+}
 
 function ETS2_Mods {
     $extractPath = "$env:USERPROFILE\Documents\Euro Truck Simulator 2\mod"
