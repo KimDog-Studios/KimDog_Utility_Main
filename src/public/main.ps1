@@ -3,7 +3,7 @@ $jsonFileUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_
 
 # Fetch the configuration file directly
 try {
-    $config = Invoke-RestMethod -Uri $jsonFileUrl
+    $config = Invoke-RestMethod -Uri $jsonFileUrl -ErrorAction Stop
     Write-Host "Config file fetched successfully."
 }
 catch {
@@ -13,11 +13,13 @@ catch {
 }
 
 # Access the URLs from the JSON configuration
-$gameOptionsUrl = $config.urls.gameOptionsUrl
-$windowsOptionsUrl = $config.urls.windowsOptionsUrl
-
-if ([string]::IsNullOrEmpty($gameOptionsUrl) -or [string]::IsNullOrEmpty($windowsOptionsUrl)) {
-    Write-Host "One or both of the URLs are null or empty in the config file."
+if ($config.urls -and $config.urls.gameOptionsUrl -and $config.urls.windowsOptionsUrl) {
+    $gameOptionsUrl = $config.urls.gameOptionsUrl
+    $windowsOptionsUrl = $config.urls.windowsOptionsUrl
+}
+else {
+    Write-Host "One or both of the URLs are missing or null in the config file."
+    exit 1
 }
 
 # Menu function
@@ -30,8 +32,8 @@ function Show-Main-Menu {
         Write-Host "3. Exit"
         $choice = Read-Host "Enter your choice"
         switch ($choice) {
-            '1' { Invoke-WebRequest -URI $gameOptionsUrl | Invoke-Expression }
-            '2' { Invoke-WebRequest -URI $windowsOptionsUrl | Invoke-Expression }
+            '1' { Invoke-WebRequest -Uri $gameOptionsUrl -UseBasicParsing | Invoke-Expression }
+            '2' { Invoke-WebRequest -Uri $windowsOptionsUrl -UseBasicParsing | Invoke-Expression }
             '3' {
                 Write-Host "Exiting script..."
                 Start-Sleep -Seconds 2
