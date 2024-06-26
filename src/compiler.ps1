@@ -9,7 +9,6 @@ if (-not (Test-Administrator)) {
     Write-Output "Script is not running as administrator. Restarting with elevated privileges..."
     Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
     Start-Sleep -Seconds 5  # Give some time for the elevated process to start
-    exit
 }
 
 # Confirming script is running with elevated privileges
