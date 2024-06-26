@@ -9,3 +9,6 @@ $encodedScript = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($sc
 
 # Start the script with elevated privileges
 Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -EncodedCommand $encodedScript" -Verb runAs
+
+# Close the current non-admin PowerShell session
+exit
