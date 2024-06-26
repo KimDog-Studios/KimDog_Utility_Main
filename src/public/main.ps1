@@ -1,5 +1,25 @@
-$gameOptionsUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/public/GameOptions.ps1"
-$windowsOptionsUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/public/WindowsOptions.ps1"
+# URL to the configuration file on GitHub
+$jsonFileUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/config/config.json"
+
+# Fetch the configuration file directly
+try {
+    $config = Invoke-RestMethod -Uri $jsonFileUrl
+    Write-Host "Config file fetched successfully."
+}
+catch {
+    Write-Host "Failed to fetch config file."
+    Write-Host $_.Exception.Message
+    exit 1
+}
+
+# Access the URLs from the JSON configuration
+$gameOptionsUrl = $config.urls.gameOptionsUrl
+$windowsOptionsUrl = $config.urls.windowsOptionsUrl
+
+if ([string]::IsNullOrEmpty($gameOptionsUrl) -or [string]::IsNullOrEmpty($windowsOptionsUrl)) {
+    Write-Host "One or both of the URLs are null or empty in the config file."
+    exit 1
+}
 
 # Menu function
 function Show-Main-Menu {
