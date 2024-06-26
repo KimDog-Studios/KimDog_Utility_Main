@@ -1,8 +1,29 @@
 # Define the base directory
 $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $cabFiles = "$scriptDir\src"
-$mainUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/public/main.ps1"
-$softwareGUI = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/private/UI/SoftwareGUI.ps1"
+
+# URL of the remote JSON configuration file
+$configUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/config/config.json"
+
+# Fetch and parse the JSON content from the URL
+try {
+    $config = Invoke-RestMethod -Uri $configUrl
+    Write-Host "Config file fetched successfully."
+}
+catch {
+    Write-Host "Failed to fetch config file."
+    Write-Host $_.Exception.Message
+    exit 1
+}
+
+# Access the URLs from the JSON configuration
+$mainUrl = $config.urls.mainUrl
+$softwareGUI = $config.urls.softwareGUI
+
+if ([string]::IsNullOrEmpty($mainUrl) -or [string]::IsNullOrEmpty($softwareGUI)) {
+    Write-Host "One or more URLs are null or empty in the config file."
+    exit 1
+}
 
 function Documents {
     $cabFile = "$cabFiles\Documents_001.cab"
@@ -39,6 +60,7 @@ function Documents {
     Start-Sleep -Seconds 5
     Clear-Host
 }
+
 function WindowsMenu {
     do {
         Clear-Host

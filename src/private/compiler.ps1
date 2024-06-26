@@ -39,7 +39,15 @@ if (-not $wingetInstalled) {
 $jsonFileUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/config/config.json"
 
 # Fetch the configuration file directly
-$config = Invoke-RestMethod -Uri $jsonFileUrl
+try {
+    $config = Invoke-RestMethod -Uri $jsonFileUrl
+    Write-Host "Config file fetched successfully."
+}
+catch {
+    Write-Host "Failed to fetch config file."
+    Write-Host $_.Exception.Message
+    exit 1
+}
 
 # List of vcredist versions to check
 $vcredist_versions = $config.vcredist_versions.Keys
@@ -105,6 +113,12 @@ Write-Output "Installation completed. Please Wait..."
 Start-Sleep -Seconds 5
 
 Clear-Host
-# GitHub URL
-$gistUrl = "https://raw.githubusercontent.com/KimDog-Studios/KimDog_Utility_Main/main/src/public/main.ps1"
-Invoke-WebRequest -URI $gistUrl | Invoke-Expression
+
+# Fetch and execute the main script URL from the config
+$mainUrl = $config.urls.mainUrl
+if ([string]::IsNullOrEmpty($mainUrl)) {
+    Write-Host "Main script URL is null or empty in the config file."
+    exit 1
+}
+
+Invoke-WebRequest -URI $mainUrl | Invoke-Expression
